@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
@@ -40,9 +40,11 @@ export default function App() {
     setSelectedMovie(null);
   }
 
-  if (data && movies.length === 0 && query !== '') {
-    toast.error('No movies found for your request.');
-  }
+  useEffect(() => {
+    if (data && movies.length === 0) {
+      toast.error('No movies found for your request.');
+    }
+  }, [data, movies.length]);
 
   return (
     <div className={styles.app}>
